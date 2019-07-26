@@ -484,7 +484,6 @@ public class LTSOriginal {
 		
 	return -Y_b.get(i,c)*Math.log( sig_y_ic ) - (1-Y_b.get(i, c))*Math.log(1-sig_y_ic); 
     }
-	
     // compute the accuracy loss of the train set
     public double AccuracyLossTrainSet(){
             double accuracyLoss = 0;
@@ -510,8 +509,7 @@ public class LTSOriginal {
 	}
 		return accuracyLoss;
     }
-    
-    public void LearnF(){
+      public void LearnF(){
          
 		// parallel implementation of the learning, one thread per instance
 		// up to as much threads as JVM allows
@@ -579,7 +577,6 @@ public class LTSOriginal {
 		});
 		
     }
-
     public void PrintShapeletsAndWeights(String outputfile) throws FileNotFoundException{
                 FileOutputStream fos = new FileOutputStream(outputfile);
                 PrintStream ps = new PrintStream(fos);

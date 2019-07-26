@@ -493,7 +493,7 @@ public class LTSOriginalMatrixProfileInit {
                         BufferedReader bri = new BufferedReader(new InputStreamReader(p.getInputStream()));
                         BufferedReader bre = new BufferedReader(new InputStreamReader(p.getErrorStream()));
                         while ((line = bri.readLine()) != null) {
-                            System.out.println(line);
+                            //System.out.println(line);
                             output.append(line);
                         }
                         //System.out.println(output.toString());
