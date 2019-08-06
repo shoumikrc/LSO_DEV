@@ -157,7 +157,7 @@ public class LearningShapeletOrdersBinaryClassificationMatrixProfileInit {
 	// set the total number of shapelets per scale as a rule of thumb 
 	// to the logarithm of the total segments
 	if( K < 0)
-            K = 3;//(int) Math.log(totalSegments) * (C-1); 
+            K = (int) Math.log(totalSegments) * (C-1); 
         
         H = K*(K-1)/2;//total Number of orders 
         //System.out.println("Shapeletspace size: " + K +" " + "Order space size: " + H);
@@ -248,7 +248,7 @@ public class LearningShapeletOrdersBinaryClassificationMatrixProfileInit {
         // shuffle the order for a better convergence
 	Collections.shuffle(instanceIdxs, rand); 
 	//PrintProjectedData();	
-	Logging.println("Initializations Completed!", LogLevel.DEBUGGING_LOG);
+	//Logging.println("Initializations Completed!", LogLevel.DEBUGGING_LOG);
     }
     public void InitializeShapeletsKMatrixprofile(){
         // a multi-threaded parallel implementation for the searching of initial shapelets through MP
@@ -762,7 +762,7 @@ public class LearningShapeletOrdersBinaryClassificationMatrixProfileInit {
 
         System.out.println("LSO for Binary Classification with MP INIT");
         //main outer directory for Dataset Selection
-        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\singleDataset\\";
+        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\synthetic\\syntheticLTS\\";
         String sp = File.separator;
         File file = new File(maindirectory);
         String[] datasets  = file.list();

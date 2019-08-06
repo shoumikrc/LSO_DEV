@@ -161,7 +161,7 @@ public class LTSOriginalBinaryClassificationMatrixProfileInit {
 		// set the total number of shapelets per scale as a rule of thumb 
 		// to the logarithm of the total segments
 	if( K < 0)
-            K = 3;//(int) Math.log(totalSegments) * (C-1); 
+            K = (int) Math.log(totalSegments) * (C-1); 
         //System.out.println(K);
 	//Logging.println("Original LTS");
 	//Logging.println("ITrain="+ITrain + ", ITest="+ITest + ", Q="+Q + ", Classes="+C, LogLevel.DEBUGGING_LOG);

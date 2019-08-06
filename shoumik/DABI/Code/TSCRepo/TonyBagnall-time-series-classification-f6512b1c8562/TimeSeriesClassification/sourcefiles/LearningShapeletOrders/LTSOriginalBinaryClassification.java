@@ -167,7 +167,7 @@ public class LTSOriginalBinaryClassification {
 		// set the total number of shapelets per scale as a rule of thumb 
 		// to the logarithm of the total segments
 		if( K < 0)
-			K = 3;//(int) Math.log(totalSegments) * (C-1); 
+			K = (int) Math.log(totalSegments) * (C-1); 
                         //System.out.println(K);
 		//Logging.println("Original LTS");
 		//Logging.println("ITrain="+ITrain + ", ITest="+ITest + ", Q="+Q + ", Classes="+C, LogLevel.DEBUGGING_LOG);
@@ -797,7 +797,7 @@ public class LTSOriginalBinaryClassification {
                 double [] arrayRet = lso.GetMCRTestSet(outfile);
                 double accuracy = 1 - arrayRet[0];
                 
-                System.out.println("Accuracy for seed: " + seed + ":" + accuracy);
+                //System.out.println("Accuracy for seed: " + seed + ":" + accuracy);
                 meanAccuracy[counter] = accuracy;
                 counter++;
                 /*lso.PrintShapeletsAndWeights();

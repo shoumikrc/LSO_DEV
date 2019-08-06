@@ -305,7 +305,7 @@ public class LearnShapeletOrders {
                         //System.out.println(k2);
                         if(k1<k2 && orderIndex < H){
                             //System.out.println("k1: " + k1 + " " + "k2: " + k2);
-                            G[i][r][orderIndex] = 0.01*(B[i][r][k1] - B[i][r][k2]);
+                            G[i][r][orderIndex] = (B[i][r][k1] - B[i][r][k2]);
                             orderIndex=orderIndex+1;
                         }
                         
@@ -633,7 +633,35 @@ public class LearnShapeletOrders {
         });
 		
     }
-
+    public void PrintProjectedData() throws FileNotFoundException{
+                //FileOutputStream fos4 = new FileOutputStream(outputfile1);
+                //PrintStream ps4 = new PrintStream(fos4);
+		int r = 0, c = 0;
+		
+		System.out.print("Data= [ ");
+		
+		for(int i = 0; i < ITrain +ITest; i++){
+			PreCompute(i); 
+			
+			//System.out.print(Y_b.get(i, c) + " "); 
+			
+			for(int k = 0; k < K; k++){
+				System.out.print(M[i][r][k] + " ");
+                                System.out.print(B[i][r][k]+ " ");
+                                //ps4.print(M[i][r][k]+ " ");
+			}
+                        
+                        for(int h = 0;h<H;h++){
+                            System.out.print(G[i][r][h] + " ");
+                        }
+                        //ps4.println();
+			
+			System.out.println(";");
+		}
+                
+		//ps4.close();
+		System.out.println("];");
+	}
     public void PrintShapeletsAndWeights(String outputfile) throws FileNotFoundException{
                 FileOutputStream fos = new FileOutputStream(outputfile);
                 PrintStream ps = new PrintStream(fos);
