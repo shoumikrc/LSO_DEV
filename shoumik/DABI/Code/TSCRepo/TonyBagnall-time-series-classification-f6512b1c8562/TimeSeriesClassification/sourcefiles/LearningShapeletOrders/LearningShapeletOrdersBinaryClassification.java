@@ -164,7 +164,7 @@ public class LearningShapeletOrdersBinaryClassification{
 	// set the total number of shapelets per scale as a rule of thumb 
 	// to the logarithm of the total segments
 	if( K < 0)
-            K = 3;//(int) Math.log(totalSegments) * (C-1); 
+            K = (int) Math.log(totalSegments) * (C-1); 
         
         H = K*(K-1)/2;//total Number of orders 
         //System.out.println("Shapeletspace size: " + K +" " + "Order space size: " + H);
@@ -183,7 +183,7 @@ public class LearningShapeletOrdersBinaryClassification{
 		
 	// initialize shapelets
 	InitializeShapeletsKMeans();
-        //InitializeShapeletsMatrixProfile();
+        
 		
 		
 	// initialize the terms for pre-computation
@@ -254,7 +254,6 @@ public class LearningShapeletOrdersBinaryClassification{
 	
         // shuffle the order for a better convergence
 	Collections.shuffle(instanceIdxs, rand); 
-	//PrintProjectedData();	
 	Logging.println("Initializations Completed!", LogLevel.DEBUGGING_LOG);
     }
     public void PreCompute(int i){
@@ -324,7 +323,8 @@ public class LearningShapeletOrdersBinaryClassification{
                         //System.out.println(k2);
                     if(k1<k2 && orderIndex < H){
                             //System.out.println("k1: " + k1 + " " + "k2: " + k2);
-                        G[i][r][orderIndex] = 0.01*(B[i][r][k1] - B[i][r][k2]);
+                            //System.out.println(Q);
+                        G[i][r][orderIndex] = (B[i][r][k1] - B[i][r][k2])/Q;
                             orderIndex=orderIndex+1;
                     }
                         
@@ -409,6 +409,8 @@ public class LearningShapeletOrdersBinaryClassification{
     public double[] Learn(String predictfile) throws FileNotFoundException{
         // initialize the data structures
 	Initialize();
+        //System.out.println("The initial shapelets and wight matrix");
+        //PrintShapeletsAndWeights();
         //System.out.println("The initial feature matrix");
         //PrintProjectedData();
 				
@@ -676,29 +678,33 @@ public class LearningShapeletOrdersBinaryClassification{
                 //PrintStream ps = new PrintStream(fos);
 		for(int r = 0; r < R; r++){
 			for(int k = 0; k < K; k++){
-				System.out.print("Shapelets("+r+","+k+")= [ ");
+				//System.out.print("Shapelets("+r+","+k+")= [ ");
                                 //ps.print("Shapelets("+r+","+k+")= [ ");
 				
 				for(int l = 0; l < L[r]; l++){
-					System.out.print(Shapelets[r][k][l] + " ");
+					//System.out.print(Shapelets[r][k][l] + " ");
                                         //ps.print(Shapelets[r][k][l] + " ");
 				}
 				
-				System.out.println("]");
+				//System.out.println("]");
                                 //ps.println();
 			}
 		}
-
+                System.out.println("Weights\n");
 		//for(int c = 0; c < C; c++){
 			for(int r = 0; r < R; r++){
 				//System.out.print("W("+c+","+r+")= [ ");
                                 //ps.print("W("+c+","+r+")= [ ");
-				
+				System.out.println("Distance Weights\n");
                                 for(int k = 0; k < K; k++){
-					//System.out.print(W[c][r][k] + " ");
+					System.out.print(W_k[r][k] + " ");
                                         // ps.print(W[c][r][k] + " ");
                                 }
-				
+                                System.out.println("Order Weights\n");
+				for(int h = 0; h < H; h++){
+					System.out.print(W_h[r][h] + " ");
+                                        // ps.print(W[c][r][k] + " ");
+                                }
 				//System.out.print(biasW[c] + " ");
                                 //ps.print(biasW[c] + " ");
 				//System.out.println("]");
@@ -744,7 +750,7 @@ public class LearningShapeletOrdersBinaryClassification{
 
         System.out.println("LSO for Binary Classification");
         //main outer directory for Dataset Selection
-        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\singleDataset\\";
+        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\synthetic\\syntheticLTS\\";
         String sp = File.separator;
         File file = new File(maindirectory);
         String[] datasets  = file.list();
@@ -854,22 +860,21 @@ public class LearningShapeletOrdersBinaryClassification{
                 lso.Learn(outfile);
                 double elapsedMethodTime = System.currentTimeMillis() - startMethodTime;
                 trainTimes[counter] = elapsedMethodTime/1000; // in second
-                
                 double [] arrayRet = lso.GetMCRTestSet(outfile);
                 double accuracy = 1 - arrayRet[0];
                 
                 System.out.println("Accuracy for seed: " + seed + ":" + accuracy);
-                System.out.println("Delta: " + lso.delta +  " " + "1 - Delta: " + (1 - lso.delta));
+                //System.out.println("Delta: " + lso.delta +  " " + "1 - Delta: " + (1 - lso.delta));
 
                 meanAccuracy[counter] = accuracy;
                 counter++;
-                /*lso.PrintShapeletsAndWeights();
-                System.out.println("The Final feature matrix");
-                lso.PrintProjectedData();
+                //System.out.println("The Final shapelets and weight matrix");
+                //lso.PrintShapeletsAndWeights();
+                //System.out.println("The Final feature matrix");
                 //lso.PrintProjectedData();
-                System.out.println("Delta: " + lso.delta +  " " + "1 - Delta: " + (1 - lso.delta));
+                //System.out.println("Delta: " + lso.delta +  " " + "1 - Delta: " + (1 - lso.delta));
                 //for(int i = 0;i<lso.ITrain+lso.ITest;i++){
-                System.out.print("W_k: ");    
+                /*System.out.print("W_k: ");    
                 for (int k = 0; k<lso.K;k++){
                         System.out.print(lso.W_k[0][k]);
                         System.out.print(" ");
