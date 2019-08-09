@@ -393,7 +393,7 @@ public class LearningShapeletOrdersBinaryClassificationMatrixProfileInit {
                         //System.out.println(k2);
                     if(k1<k2 && orderIndex < H){
                             //System.out.println("k1: " + k1 + " " + "k2: " + k2);
-                        G[i][r][orderIndex] = 0.01*(B[i][r][k1] - B[i][r][k2]);
+                        G[i][r][orderIndex] = (B[i][r][k1] - B[i][r][k2])/Q;
                             orderIndex=orderIndex+1;
                     }
                         
@@ -762,7 +762,7 @@ public class LearningShapeletOrdersBinaryClassificationMatrixProfileInit {
 
         System.out.println("LSO for Binary Classification with MP INIT");
         //main outer directory for Dataset Selection
-        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\synthetic\\syntheticLTS\\";
+        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\experiment\\";
         String sp = File.separator;
         File file = new File(maindirectory);
         String[] datasets  = file.list();
@@ -846,7 +846,7 @@ public class LearningShapeletOrdersBinaryClassificationMatrixProfileInit {
                 double K = -1;
                 double eta = 0.01;
                 double alpha = -100;
-                int R = 1;
+                int R = 3;
                 
                 // set predefined parameters if none set
                 if(R < 0) R = 3;
@@ -877,8 +877,8 @@ public class LearningShapeletOrdersBinaryClassificationMatrixProfileInit {
                 double [] arrayRet = lso.GetMCRTestSet(outfile);
                 double accuracy = 1 - arrayRet[0];
                 
-                System.out.println("Accuracy for seed: " + seed + ":" + accuracy);
-                System.out.println("Delta: " + lso.delta +  " " + "1 - Delta: " + (1 - lso.delta));
+                //System.out.println("Accuracy for seed: " + seed + ":" + accuracy);
+                //System.out.println("Delta: " + lso.delta +  " " + "1 - Delta: " + (1 - lso.delta));
                 meanAccuracy[counter] = accuracy;
                 counter++;
                 /*lso.PrintShapeletsAndWeights();

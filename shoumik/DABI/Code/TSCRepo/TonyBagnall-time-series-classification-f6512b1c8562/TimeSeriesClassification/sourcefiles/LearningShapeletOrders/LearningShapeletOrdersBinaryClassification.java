@@ -254,7 +254,7 @@ public class LearningShapeletOrdersBinaryClassification{
 	
         // shuffle the order for a better convergence
 	Collections.shuffle(instanceIdxs, rand); 
-	Logging.println("Initializations Completed!", LogLevel.DEBUGGING_LOG);
+	//Logging.println("Initializations Completed!", LogLevel.DEBUGGING_LOG);
     }
     public void PreCompute(int i){
         // precompute terms
@@ -750,7 +750,7 @@ public class LearningShapeletOrdersBinaryClassification{
 
         System.out.println("LSO for Binary Classification");
         //main outer directory for Dataset Selection
-        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\synthetic\\syntheticLTS\\";
+        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\experiment\\";
         String sp = File.separator;
         File file = new File(maindirectory);
         String[] datasets  = file.list();
@@ -832,7 +832,7 @@ public class LearningShapeletOrdersBinaryClassification{
                 double K = -1;
                 double eta = 0.01;
                 double alpha = -100;
-                int R = 1;
+                int R = 3;
                 
                 // set predefined parameters if none set
                 if(R < 0) R = 3;
@@ -863,7 +863,7 @@ public class LearningShapeletOrdersBinaryClassification{
                 double [] arrayRet = lso.GetMCRTestSet(outfile);
                 double accuracy = 1 - arrayRet[0];
                 
-                System.out.println("Accuracy for seed: " + seed + ":" + accuracy);
+                //System.out.println("Accuracy for seed: " + seed + ":" + accuracy);
                 //System.out.println("Delta: " + lso.delta +  " " + "1 - Delta: " + (1 - lso.delta));
 
                 meanAccuracy[counter] = accuracy;

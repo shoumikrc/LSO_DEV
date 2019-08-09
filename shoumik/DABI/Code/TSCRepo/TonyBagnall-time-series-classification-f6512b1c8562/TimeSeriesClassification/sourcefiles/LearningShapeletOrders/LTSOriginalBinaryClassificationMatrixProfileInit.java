@@ -692,7 +692,7 @@ public class LTSOriginalBinaryClassificationMatrixProfileInit {
     public static void main(String [] args) throws FileNotFoundException, IOException{
         System.out.println("LTS for Binary Classification with MP_INIT");
         //main outer directory for Dataset Selection
-        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\synthetic\\syntheticLTS\\";
+        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\experimentS\\";
         String sp = File.separator;
         File file = new File(maindirectory);
         String[] datasets  = file.list();

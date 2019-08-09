@@ -681,7 +681,7 @@ public class LTSOriginalBinaryClassification {
     public static void main(String [] args) throws FileNotFoundException, IOException{
         System.out.println("LTS for Binary Classification");
         //main outer directory for Dataset Selection
-        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\synthetic\\syntheticLTS\\";
+        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\experiment\\";
         String sp = File.separator;
         File file = new File(maindirectory);
         String[] datasets  = file.list();

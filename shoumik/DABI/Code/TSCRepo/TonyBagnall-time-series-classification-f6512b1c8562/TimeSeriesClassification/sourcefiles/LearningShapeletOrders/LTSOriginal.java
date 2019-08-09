@@ -617,7 +617,7 @@ public class LTSOriginal {
     public static void main(String [] args) throws FileNotFoundException, IOException{
         System.out.println("LTS");
         //main outer directory for Dataset Selection
-        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\experiment\\";
+        String maindirectory = "C:\\shoumik\\DABI\\datasets\\TSCProblems2018\\experiment\\DEVICE\\";
         String sp = File.separator;
         File file = new File(maindirectory);
         String[] datasets  = file.list();
@@ -646,6 +646,7 @@ public class LTSOriginal {
             int numofSeeds = 10;
             int counter = 0;
             double [] meanAccuracy = new double[numofSeeds]; 
+            double [] meanTrainAccuracy = new double[numofSeeds];
             double [] trainTimes = new double[numofSeeds];
             //Create resample datasets for seeds 0 - 10 
             for(long seed = 0;seed<numofSeeds;seed++ ){
@@ -731,11 +732,13 @@ public class LTSOriginal {
                 lso.Learn(outfile);
                 double elapsedMethodTime = System.currentTimeMillis() - startMethodTime;
                 trainTimes[counter] = elapsedMethodTime/1000; // in second
-                
+                double trainSetError = lso.GetMCRTrainSet();
+                double trainSetAccuracy = 1 - trainSetError;
                 double [] arrayRet = lso.GetMCRTestSet(outfile);
                 double accuracy = 1 - arrayRet[0];
-                
-                System.out.println("Accuracy for seed: " + seed + ":" + accuracy);
+                System.out.println("Train Set Accuracy for seed " + seed + ":" + trainSetAccuracy);
+                meanTrainAccuracy[counter] = trainSetAccuracy;
+                System.out.println("Test Set Accuracy for seed " + seed + ":" + accuracy);
                 meanAccuracy[counter] = accuracy;
                 counter++;
                 
@@ -763,11 +766,17 @@ public class LTSOriginal {
             double accuracyMean = StatisticalUtilities.mean(meanAccuracy, false);
             double stdMean = StatisticalUtilities.standardDeviation(meanAccuracy, false, accuracyMean);
             
+            double trainAccuracyMean = StatisticalUtilities.mean(meanTrainAccuracy, false);
+            double trainstdMean = StatisticalUtilities.standardDeviation(meanTrainAccuracy, false, trainAccuracyMean);
+
             double trainTime = StatisticalUtilities.mean(trainTimes,false);
             double trainStd = StatisticalUtilities.standardDeviation(trainTimes, false, trainTime);
+            
+            System.out.println(trainAccuracyMean + "\u00B1" + trainstdMean);
             System.out.println(accuracyMean + "\u00B1" + stdMean);
             System.out.println(trainTime + "\u00B1" + trainStd);
-            ps.print("Accuracy: " + accuracyMean + "\u00B1" + stdMean);
+            ps.print("Average Train set Accuracy: " + trainAccuracyMean + "\u00B1" + trainstdMean);
+            ps.print("\nAverage Test set Accuracy: " + accuracyMean + "\u00B1" + stdMean);
             ps.print("\nTraining Time: " + trainTime + "\u00B1" + trainStd);
             ps.close();
             
@@ -776,7 +785,7 @@ public class LTSOriginal {
         
         
             
-        }
+    }
     
 }
 
